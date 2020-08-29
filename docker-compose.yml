@@ -1,0 +1,45 @@
+version: '3.7'
+
+services:
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    entrypoint: ['/usr/src/app/entrypoint.sh']
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - 8000:8000
+    environment:
+      - DJANGO_SETTINGS_MODULE=star_wars.settings
+      - POSTGRES_DB_DEV=api_dev
+      - POSTGRES_DB_TEST=api_test
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=api-db
+      - POSTGRES_PORT=5432
+      - FETCH_PEOPLE_API=https://swapi.dev/api/people/
+      - MEMCACHED_API=api-db
+      - MEMCACHED_PORT=11211
+    depends_on:
+      - api-db
+      - api-cache
+
+  api-db:
+    build:
+      context: ./star_wars/db
+      dockerfile: Dockerfile
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  api-cache:
+    image: memcached
+    ports:
+      - 11211
+    entrypoint:
+      - memcached
+      - -m 64
