@@ -14,6 +14,10 @@ The only one requirement necessary is to have installes docker and docker-compos
 
 ### how to build and run this API
 
+first you have to clone the repository:
+
+    - git clone https://github.com/Rher92/star-wars-api.git
+
 If you want to see all logs running in realtime on the terminal, you must execute:
     - docker-compose up --build
 
