@@ -3,6 +3,7 @@ version: '3.7'
 services:
 
   api:
+    image: rher92/api
     build:
       context: .
       dockerfile: Dockerfile
@@ -27,6 +28,7 @@ services:
       - api-cache
 
   api-db:
+    image: rher92/api-db
     build:
       context: ./star_wars/db
       dockerfile: Dockerfile
