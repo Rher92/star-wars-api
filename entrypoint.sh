@@ -9,6 +9,5 @@ done
 echo "PostgreSQL started"
 
 cd star_wars/
-python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver 0.0.0.0:8000
