@@ -58,3 +58,4 @@ createsuperuser
 
 docker-compose exec api python /usr/src/app/star_wars/manage.py createsuperuser
 
+### How to start, push images in order to deploy woth docker swarm

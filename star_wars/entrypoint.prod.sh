@@ -8,6 +8,6 @@ done
 
 echo "PostgreSQL started"
 
-cd star_wars/
 python manage.py migrate
-python manage.py runserver 0.0.0.0:8000
+python manage.py collectstatic --no-input
+gunicorn star_wars.wsgi:application --bind 0.0.0.0:8000

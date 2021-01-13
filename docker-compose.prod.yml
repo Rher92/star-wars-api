@@ -3,14 +3,16 @@ version: '3.7'
 services:
 
   api:
+    image: rher92/api
     build:
       context: ./star_wars
-      dockerfile: Dockerfile
-    entrypoint: ['/usr/src/app/star_wars/entrypoint.sh']
+      dockerfile: Dockerfile.prod
+    entrypoint: ['/usr/src/app/entrypoint.prod.sh']
     volumes:
-      - .:/usr/src/app
-    ports:
-      - 8000:8000
+      - static_volume:/usr/src/app/staticfiles
+      - media_volume:/usr/src/app/mediafiles    
+    expose:
+      - 8000
     environment:
       - DJANGO_SETTINGS_MODULE=star_wars.settings
       - POSTGRES_DB_DEV=api_dev
@@ -23,13 +25,16 @@ services:
       - MEMCACHED_API=api-db
       - MEMCACHED_PORT=11211
       - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-      - DEBUG=1
-      - SECRET_KEY='start-wars-super-secret-key'
+      - DEBUG=0
+      - SECRET_KEY='7fp!!r-1h(#w=z9!xjvl#*f&_)au9s99le5p=h*k5j51(z)fr&'
     depends_on:
       - api-db
       - api-cache
 
   api-db:
+    image: rher92/api-db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/    
     build:
       context: ./star_wars/db
       dockerfile: Dockerfile
@@ -46,3 +51,18 @@ services:
     entrypoint:
       - memcached
       - -m 64
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+    ports:
+      - 1337:80
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:          
