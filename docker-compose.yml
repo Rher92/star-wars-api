@@ -23,7 +23,7 @@ services:
       - MEMCACHED_API=api-db
       - MEMCACHED_PORT=11211
       - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-      - DEBUG=True
+      - DEBUG=1
       - SECRET_KEY='start-wars-super-secret-key'
     depends_on:
       - api-db

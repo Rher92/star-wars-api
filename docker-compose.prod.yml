@@ -25,7 +25,7 @@ services:
       - MEMCACHED_API=api-db
       - MEMCACHED_PORT=11211
       - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-      - DEBUG=False
+      - DEBUG=0
       - SECRET_KEY='7fp!!r-1h(#w=z9!xjvl#*f&_)au9s99le5p=h*k5j51(z)fr&'
     depends_on:
       - api-db
@@ -66,4 +66,4 @@ services:
 volumes:
   postgres_data:
   static_volume:
-  media_volume:          
+  media_volume:
