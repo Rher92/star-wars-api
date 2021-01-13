@@ -25,7 +25,7 @@ services:
       - MEMCACHED_API=api-db
       - MEMCACHED_PORT=11211
       - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-      - DEBUG=0
+      - DEBUG=False
       - SECRET_KEY='7fp!!r-1h(#w=z9!xjvl#*f&_)au9s99le5p=h*k5j51(z)fr&'
     depends_on:
       - api-db
@@ -55,8 +55,8 @@ services:
   nginx:
     build: ./nginx
     volumes:
-      - static_volume:/home/app/web/staticfiles
-      - media_volume:/home/app/web/mediafiles
+      - static_volume:/usr/src/app/staticfiles
+      - media_volume:/usr/src/app/mediafiles 
     ports:
       - 1337:80
     depends_on:
