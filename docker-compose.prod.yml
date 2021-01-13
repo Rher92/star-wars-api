@@ -53,6 +53,7 @@ services:
       - -m 64
 
   nginx:
+    image: rher92/api-nginx
     build: ./nginx
     volumes:
       - static_volume:/usr/src/app/staticfiles
